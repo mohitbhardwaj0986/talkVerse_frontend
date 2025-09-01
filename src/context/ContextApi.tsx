@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
 
 // Define types for context
@@ -23,6 +24,13 @@ interface UserData {
   userName: string;
 }
 
+interface DecodedToken {
+  _id: string;
+  email: string;
+  userName: string;
+  exp?: number; // optional expiry
+}
+
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 const DataProvider = ({ children }: DataProviderProps) => {
@@ -37,23 +45,28 @@ const DataProvider = ({ children }: DataProviderProps) => {
     if (parts.length === 2) return parts.pop()?.split(";").shift();
   }
 
- 
+  // Decode token once when provider mounts
+  useEffect(() => {
     const token = getCookie("token");
-    
+
     if (token) {
       try {
-        const decoded: any = jwtDecode(token);
+        const decoded = jwtDecode<DecodedToken>(token);
         const userData: UserData = {
           userId: decoded._id,
           email: decoded.email,
           userName: decoded.userName,
         };
-        localStorage.setItem("userInfo", JSON.stringify(userData))
+
+        setUser(userData);
+        localStorage.setItem("userInfo", JSON.stringify(userData));
       } catch (err) {
-        console.error("Invalid token:", err);
+        console.error("❌ Invalid token:", err);
+        setUser(null);
+        localStorage.removeItem("userInfo");
       }
     }
-
+  }, []);
 
   const value: DataContextType = {
     chatId,
