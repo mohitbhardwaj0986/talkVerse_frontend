@@ -4,7 +4,7 @@ import { FiMessageSquare, FiPlus } from "react-icons/fi";
 import axios from "../axios/axios";
 import { useData } from "../context/ContextApi";
 import {Link} from 'react-router-dom'
-  import { FaBars, FaTimes } from "react-icons/fa";
+  import {FaTimes } from "react-icons/fa";
 import LogoutButton from "./LogoutButton";
 
 interface Chat {

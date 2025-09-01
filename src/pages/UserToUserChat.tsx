@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { FaPaperPlane, FaBars, FaTimes } from "react-icons/fa";
 import axios from "../axios/axios"; // axios instance
