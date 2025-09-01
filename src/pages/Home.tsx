@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import ai_img from "../assets/ai_img.jpg";
 import { Link } from "react-router-dom";

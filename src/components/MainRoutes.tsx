@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import {  Routes, Route } from "react-router-dom";
 
 const AiChat = lazy(() => import("../pages/AiChat"));
 const UserToUserChat = lazy(() => import("../pages/UserToUserChat"));

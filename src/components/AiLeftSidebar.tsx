@@ -11,8 +11,11 @@ interface Chat {
   _id: string;
   title: string;
 }
-
-function AiLeftSidebar({sidebarOpen,setSidebarOpen}) {
+interface AiLeftSidebarProps {
+  sidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+function AiLeftSidebar({ sidebarOpen, setSidebarOpen }: AiLeftSidebarProps) {
   const [chats, setChats] = useState<Chat[]>([]);
   const [newChatTitle, setNewChatTitle] = useState<string>("");
   const [showInput, setShowInput] = useState<boolean>(false);

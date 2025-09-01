@@ -1,11 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+// ✅ get all props that motion.button supports
+type MotionButtonProps = React.ComponentProps<typeof motion.button>;
+
+type ButtonProps = MotionButtonProps & {
   children: React.ReactNode;
   variant?: "primary" | "secondary";
   className?: string;
-}
+};
 
 const Button: React.FC<ButtonProps> = ({
   children,
@@ -22,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
                   hover:opacity-90 transition text-black shadow-lg 
                   disabled:opacity-50 disabled:cursor-not-allowed
                   ${className}`}
-      {...rest} // ✅ forwards props like disabled, type, onClick
+      {...rest}
     >
       {children}
     </motion.button>
