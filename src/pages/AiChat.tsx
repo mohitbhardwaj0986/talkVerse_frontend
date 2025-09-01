@@ -6,7 +6,7 @@
   import AiLeftSidebar from "../components/AiLeftSidebar";
   import { useData } from "../context/ContextApi";
   import ReactMarkdown from "react-markdown";
-  import { FaBars, FaTimes } from "react-icons/fa";
+  import { FaBars } from "react-icons/fa";
 
   const socket = io(import.meta.env.VITE_BACKEND_URL, {
     transports: ["websocket"],

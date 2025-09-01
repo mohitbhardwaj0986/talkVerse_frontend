@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { FaPaperPlane, FaBars, FaTimes } from "react-icons/fa";
 import axios from "../axios/axios"; // axios instance
-import { isObject } from "framer-motion";
 import LogoutButton from "../components/LogoutButton";
 
 interface Message {
