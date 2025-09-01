@@ -1,4 +1,3 @@
-import React from "react";
 import MainRoutes from "./components/MainRoutes";
 import {Toaster} from 'sonner'
 
