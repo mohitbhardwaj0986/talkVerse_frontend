@@ -114,10 +114,6 @@ function UserToUserChat() {
 
   const joinByLink = async (inviteToken: string) => {
     try {
-      if (isObject(inviteToken)) {
-        const inviteToken = prompt("Enter invite token:");
-      }
-
       await axios.post(`/chat/join/${inviteToken}`);
       socketRef.current?.emit("join-chat", { inviteToken }); // 👈 safe emit
     } catch (err) {
