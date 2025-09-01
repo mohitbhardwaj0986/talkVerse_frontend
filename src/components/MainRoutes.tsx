@@ -9,8 +9,8 @@ import Home from '../pages/Home'
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import Loading from "../pages/Loading";
-import NonProtectedRoute from "./NonProtectedRoute";
-import ProjextedRoute from "./ProjextedRoute";
+// import NonProtectedRoute from "./NonProtectedRoute";
+// import ProjextedRoute from "./ProjextedRoute";
 
 function MainRoutes() {
   return (
