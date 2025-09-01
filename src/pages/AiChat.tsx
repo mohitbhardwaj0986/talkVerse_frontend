@@ -24,7 +24,8 @@
   const [sidebarOpen, setSidebarOpen] = useState(false);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const chatRef = useRef(null);
+ const chatRef = useRef<HTMLDivElement | null>(null);
+
 
     // ✅ Auto-scroll
     useEffect(() => {

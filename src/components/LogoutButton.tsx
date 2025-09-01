@@ -1,22 +1,35 @@
+// LogoutButton.tsx
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import axios from "../axios/axios";
+import axiosInstance from "../axios/axios"; 
+import axios from "axios";  
 import { BiLogOut } from "react-icons/bi";
-function LogoutButton() {
-  const [loading, setLoading] = useState(false);
 
-  const handleLogout = async () => {
+const LogoutButton: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleLogout = async (): Promise<void> => {
     setLoading(true);
     try {
-      const res = await axios.post("/user/logout");
+      // 👇 use axiosInstance, not raw axios
+      const res = await axiosInstance.post<{ message?: string }>("/user/logout");
+
       toast.success(res.data?.message || "Logged out successfully ✨");
 
       setTimeout(() => {
         window.location.href = "/login";
       }, 1000);
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Logout failed ❌");
+    } catch (err: unknown) {
+      let message = "Logout failed ❌";
+
+      if (axios.isAxiosError<{ message?: string }>(err)) {
+        message = err.response?.data?.message || message;
+      } else if (err instanceof Error) {
+        message = err.message;
+      }
+
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -40,12 +53,12 @@ function LogoutButton() {
         />
       ) : (
         <div className="flex justify-between items-center gap-2">
-
-         <BiLogOut />Logout
+          <BiLogOut />
+          Logout
         </div>
       )}
     </motion.button>
   );
-}
+};
 
 export default LogoutButton;
