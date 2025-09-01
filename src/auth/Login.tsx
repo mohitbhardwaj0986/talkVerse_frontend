@@ -35,8 +35,8 @@ const Login: React.FC = () => {
       });
 
       if (res.data.success) {
-        toast.success("Login successful! 🎉", { id: toastId });
         navigate("/ai-chat");
+        toast.success("Login successful! 🎉", { id: toastId });
       } else {
         setServerError(res.data.message || "Login failed");
         toast.error(res.data.message || "Login failed", { id: toastId });
