@@ -48,6 +48,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // Decode token once when provider mounts
   useEffect(() => {
     const token = getCookie("token");
+console.log(token);
 
     if (token) {
       try {
