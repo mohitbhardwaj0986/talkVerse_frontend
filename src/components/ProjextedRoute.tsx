@@ -8,7 +8,7 @@ function ProjextedRoute() {
   }
 
   const token = getCookie("token");
-  if (!token) return <Navigate to="/ai-chat" />;
+  if (!token) return <Navigate to="/login" />;
   return <Outlet />;
 }
 
