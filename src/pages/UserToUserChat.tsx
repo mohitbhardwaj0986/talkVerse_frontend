@@ -149,11 +149,15 @@ function UserToUserChat() {
     socket.emit("send-message", { chatId, content: newMessage });
     setNewMessage("");
   };
-  const HandleClick = (id: string, inviteToken: string) => {
-    console.log(inviteToken);
-    joinByLink(inviteToken);
-    setChatId(id);
-  };
+const HandleClick = (id: string, inviteToken?: string) => {
+  if (!inviteToken) {
+    console.warn("⚠️ No invite token available for this chat");
+    return;
+  }
+  console.log(inviteToken);
+  joinByLink(inviteToken);
+  setChatId(id);
+};
   /* -------------------- UI -------------------- */
   return (
     <div className="flex relative h-screen bg-gradient-to-b from-black to-[#0a0a0a] text-gray-200">
@@ -186,7 +190,7 @@ function UserToUserChat() {
           {chats.map((c) => (
             <div
               key={c._id}
-              onClick={() => HandleClick(c?._id, c?.inviteToken)}
+              onClick={() => HandleClick(c?._id, c.inviteToken)}
               className={`flex flex-col gap-1 p-4 cursor-pointer rounded-xl mx-2 my-2 transition-all duration-200 shadow-sm ${
                 chatId === c._id
                   ? "bg-green-600 text-white shadow-md scale-[1.02]"
