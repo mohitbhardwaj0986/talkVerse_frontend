@@ -20,7 +20,8 @@ function AiLeftSidebar({ sidebarOpen, setSidebarOpen }: AiLeftSidebarProps) {
   const [newChatTitle, setNewChatTitle] = useState<string>("");
   const [showInput, setShowInput] = useState<boolean>(false);
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
-  const {setChatId } = useData();
+  const {setChatId,user } = useData();
+  
   const getChatHandle = (id:string) => {
     setActiveChatId(id);
     setChatId(id)
@@ -31,8 +32,10 @@ function AiLeftSidebar({ sidebarOpen, setSidebarOpen }: AiLeftSidebarProps) {
   useEffect(() => {
     const fetchChats = async () => {
       try {
+     
+        
         const res = await axios.get<{ data: Chat[] }>(
-          "/chat/68a81f9b503215ee775946db"
+          `/chat/${user?.userId}`
         );
         
         setChats(res.data.data || []);

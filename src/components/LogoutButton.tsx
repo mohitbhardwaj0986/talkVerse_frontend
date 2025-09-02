@@ -2,24 +2,27 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import axiosInstance from "../axios/axios"; 
-import axios from "axios";  
+import axiosInstance from "../axios/axios";
+import axios from "axios";
 import { BiLogOut } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const LogoutButton: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const handleLogout = async (): Promise<void> => {
     setLoading(true);
     try {
       // 👇 use axiosInstance, not raw axios
-      const res = await axiosInstance.post<{ message?: string }>("/user/logout");
-
+     const res = await axiosInstance.post<{ message?: string }>(
+  "/user/logout",
+  {},
+  { withCredentials: true }
+);
+      localStorage.clear()
       toast.success(res.data?.message || "Logged out successfully ✨");
 
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 1000);
+      navigate("/login");
     } catch (err: unknown) {
       let message = "Logout failed ❌";
 
@@ -42,7 +45,11 @@ const LogoutButton: React.FC = () => {
       disabled={loading}
       onClick={handleLogout}
       className={`px-4 py-2 rounded-xl font-medium text-white transition-colors shadow-md
-        ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}
+        ${
+          loading
+            ? "bg-gray-500 cursor-not-allowed"
+            : "bg-red-600 hover:bg-red-700"
+        }
       `}
     >
       {loading ? (

@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
 import Button from "../components/Button";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react"; // spinner icon
+import { useData } from "../context/ContextApi";
 
 interface LoginFormInputs {
   identifier: string;
   password: string;
+}
+interface UserData {
+  userId: string;
+  email: string;
+  userName: string;
 }
 
 const Login: React.FC = () => {
@@ -21,34 +27,39 @@ const Login: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-
+const {setUser} = useData()
   const onSubmit = async (data: LoginFormInputs) => {
-    try {
-      setLoading(true);
-      setServerError(null);
+  try {
+    setLoading(true);
+    setServerError(null);
 
-      // Show a loading toast
-      const toastId = toast.loading("Logging in...");
 
-      const res = await axios.post("/user/login", data, {
-        withCredentials: true,
-      });
+    const res = await axios.post("/user/login", data, { withCredentials: true });
 
-      if (res.data.success) {
-        navigate("/ai-chat");
-        toast.success("Login successful! 🎉", { id: toastId });
-      } else {
-        setServerError(res.data.message || "Login failed");
-        toast.error(res.data.message || "Login failed", { id: toastId });
-      }
-    } catch (err: any) {
-      console.error("❌ Login Error:", err);
-      setServerError(err.response?.data?.message || "Something went wrong");
-      toast.error(err.response?.data?.message || "Something went wrong");
-    } finally {
-      setLoading(false);
+    if (res.data.success) {
+      const userData: UserData = {
+        userId: res.data.data._id,
+        email: res.data.data.email,
+        userName: res.data.data.userName,
+      };
+      
+      localStorage.setItem("userInfo", JSON.stringify(userData));
+      
+      setUser(userData)
+      toast.success("Login successful! 🎉");
+      navigate("/ai-chat");
+    } else {
+      setServerError(res.data.message || "Login failed");
+      toast.error(res.data.message || "Login failed");
     }
-  };
+  } catch (err: any) {
+    console.error("❌ Login Error:", err);
+    setServerError(err.response?.data?.message || "Something went wrong");
+    toast.error(err.response?.data?.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0f0a] via-[#111] to-black px-4">

@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import { jwtDecode } from "jwt-decode";
-
+  
 // Define types for context
 interface DataContextType {
   chatId: string | null;
@@ -24,13 +23,6 @@ interface UserData {
   userName: string;
 }
 
-interface DecodedToken {
-  _id: string;
-  email: string;
-  userName: string;
-  exp?: number; // optional expiry
-}
-
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 const DataProvider = ({ children }: DataProviderProps) => {
@@ -38,32 +30,14 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [userChatId, setUserChatId] = useState<string | null>(null);
   const [user, setUser] = useState<UserData | null>(null);
 
-  // Helper to read cookie
-  function getCookie(name: string) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(";").shift();
-  }
-
-  // Decode token once when provider mounts
+  // Load user from localStorage once on mount
   useEffect(() => {
-    const token = getCookie("token");
-console.log(token);
-
-    if (token) {
+    const storedUser = localStorage.getItem("userInfo");
+    if (storedUser) {
       try {
-        const decoded = jwtDecode<DecodedToken>(token);
-        const userData: UserData = {
-          userId: decoded._id,
-          email: decoded.email,
-          userName: decoded.userName,
-        };
-
-        setUser(userData);
-        localStorage.setItem("userInfo", JSON.stringify(userData));
+        setUser(JSON.parse(storedUser));
       } catch (err) {
-        console.error("❌ Invalid token:", err);
-        setUser(null);
+        console.error("❌ Failed to parse userInfo:", err);
         localStorage.removeItem("userInfo");
       }
     }

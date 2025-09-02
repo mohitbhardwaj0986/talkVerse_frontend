@@ -68,11 +68,11 @@
       if (!chatId) return;
 
       const fetchMessages = async () => {
-        try {
-          const res = await axios.get(`/chat/message/${chatId}`);
+        try {          
+          const res = await axios.get(`/chat/${chatId}/messages`);
           // 👇 Assuming backend returns: [{ role: "user"|"ai", content: "..." }]
           setMessages(res?.data?.data || []);
-          console.log(res?.data?.data);
+    
           
         } catch (err) {
           console.error("Error fetching messages:", err);
