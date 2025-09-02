@@ -1,69 +1,86 @@
-# React + TypeScript + Vite
+# 🖥️ TalkVerse Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TalkVerse frontend is a modern real-time chat application built with **React, TypeScript, Vite, Tailwind CSS, and Socket.IO**.  
+It provides a smooth and interactive user experience for secure one-to-one chats, AI-powered conversations, and seamless navigation.  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📂 Project Structure
 
-## Expanding the ESLint configuration
+├── .gitignore
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── public
+│ ├── _redirects
+│ └── vite.svg
+├── src
+│ ├── App.tsx
+│ ├── assets
+│ │ ├── ai_img.jpg
+│ │ ├── fevicone.png
+│ │ └── react.svg
+│ ├── auth
+│ │ ├── Login.tsx
+│ │ └── Register.tsx
+│ ├── axios
+│ │ └── axios.tsx
+│ ├── components
+│ │ ├── AiLeftSidebar.tsx
+│ │ ├── Button.tsx
+│ │ ├── LogoutButton.tsx
+│ │ ├── MainRoutes.tsx
+│ │ ├── NonProtectedRoute.tsx
+│ │ └── ProjextedRoute.tsx
+│ ├── context
+│ │ └── ContextApi.tsx
+│ ├── index.css
+│ ├── main.tsx
+│ ├── pages
+│ │ ├── AiChat.tsx
+│ │ ├── Home.tsx
+│ │ ├── Loading.tsx
+│ │ ├── PageNotFound.tsx
+│ │ └── UserToUserChat.tsx
+│ ├── socket
+│ │ └── socket.ts
+│ └── vite-env.d.ts
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+markdown
+Copy code
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## ⚙️ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- 🔐 **Authentication**
+  - Login, Register, Logout with JWT + HttpOnly cookies
+  - Protected and non-protected routes
+- 👥 **Chat**
+  - One-to-one chat with real-time updates via Socket.IO
+  - AI-powered chat assistant
+- 🎨 **UI/UX**
+  - Tailwind CSS styling
+  - Responsive and modern design
+  - Reusable components (Button, Sidebar, etc.)
+- ⚡ **Performance**
+  - Built with **Vite** for fast development and optimized builds
+  - Context API for global state management
+- 🛡️ **Security**
+  - Authenticated API calls via Axios with credentials
+  - Route guards (`ProtectedRoute` & `NonProtectedRoute`)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Getting Started
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 1️⃣ Clone the repo
+```bash
+git clone https://github.com/your-username/talkverse-frontend.git
+cd talkverse-frontend
