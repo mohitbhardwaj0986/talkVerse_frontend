@@ -15,6 +15,9 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
   import.meta.env.VITE_BACKEND_URL as string,
   {
     autoConnect: false,
+    transports: ["websocket"], // force websocket, no long-polling
+    withCredentials: true,     // allow cookies if your backend uses auth
+    secure: window.location.protocol === "https:", // use wss:// in prod
   }
 );
 
