@@ -6,10 +6,12 @@ import axiosInstance from "../axios/axios";
 import axios from "axios";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { useData } from "../context/ContextApi";
 
 const LogoutButton: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const {setUser} = useData()
   const handleLogout = async (): Promise<void> => {
     setLoading(true);
     try {
@@ -21,6 +23,7 @@ const LogoutButton: React.FC = () => {
 );
       localStorage.clear()
       toast.success(res.data?.message || "Logged out successfully ✨");
+      setUser(null)      
 
       navigate("/login");
     } catch (err: unknown) {
